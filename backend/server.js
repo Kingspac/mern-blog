@@ -1,16 +1,20 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const cors = require('cors');
+const user =require('./models/user');
 const app = express();
 
 
 app.use(cors());
 app.use(express.json());
 
-app.post('/register', (req,res) => {
-  const {username,password} = req.body;
-  res.json({requestDta:{username,password}})
+mongoose.connect('mongodb+srv://kingsleybulus3:MxNRbpTDVrmuraDg@cluster0.m8fqrra.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+
+app.post('/register', async  (req,res) => {
+  const {username,password,email} = req.body;
+  const userDoc = await user.create({username,password,email});
+  res.json(userDoc);
 });
 
 app.listen(4000);
-//mongodb+srv://atlas-sample-dataset-load-67efecdb4eb4ea2e33c8ea74:<db_password>@cluster0.ulwmvn2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-//T5PJMKeukD3rLTH6
+

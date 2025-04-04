@@ -2,6 +2,7 @@ import {useState} from 'react';
 
 export default function Register(){
   const [ username, setUsername] = useState('');
+  const [ email, setEmail] = useState('');
   const [ password, setPassword] = useState('');
   async function register(e){
     e.preventDefault();
@@ -25,6 +26,11 @@ export default function Register(){
       placeholder="password" 
       value={password}
       onChange={e => setPassword(e.target.value)}
+      />
+       <input type="email" 
+      placeholder="email" 
+      value={email}
+      onChange={e => setEmail(e.target.value)}
       />
       <button>Register</button>
     </form>
