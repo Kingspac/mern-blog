@@ -4,6 +4,7 @@ const cors = require('cors');
 const User =require('./models/User');
 const bcrypt =require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 const salt = bcrypt.genSaltSync(10);
@@ -11,7 +12,12 @@ const secret = 'asdfgjrjifjejfe'
 
 app.use(cors({credentials:true,origin:'http://localhost:3000'}));
 app.use(express.json());
-mongoose.connect('mongodb+srv://spac:00134679@cluster0.wwjcvqa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+app.use(cookieParser());
+
+
+
+mongoose.connect('mongodb://127.0.0.1:27017/User');
+//mongoose.connect('mongodb+srv://spac:00134679@cluster0.wwjcvqa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
 app.post('/register', async  (req,res) => {
   const {username,password} = req.body;
@@ -40,5 +46,19 @@ const passOk = bcrypt.compareSync(password,userDoc.password);
    res.status(400).json('wrong credencials')
  }
 });
-app.listen(4000);
+
+app.get('/profile',(req,res)=>{
+const {token} = req.cookies;
+jwt.verify(token, secret, {}, (error,info)=>{
+  if(error)throw error;
+  res.json(info);
+ })
+})
+
+app.post('/logout',(req,res)=>{
+  res.cookie('token','').json(ok)
+})
+app.listen(4000, ()=> {
+  console.log('Listening on port 4000... ' );
+});
 
