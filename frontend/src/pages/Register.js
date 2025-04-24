@@ -7,6 +7,7 @@ export default function Register(){
   //const [ email, setEmail] = useState('');
   async function register(e){
     e.preventDefault();
+    /*
   const response = await fetch('http://localhost:4000/register',{
       method:'POST',
       body: JSON.stringify({username,password}),
@@ -16,7 +17,7 @@ export default function Register(){
       alert('Registration succesfull!')
     }else{
       alert('registration failed')
-    }
+    }/*/
   }
   
   return(
