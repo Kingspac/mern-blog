@@ -11,9 +11,9 @@ export default function EditPost(){
   const {id} = useParams;
   
   useEffect(()=>{
-    //fetch("http://192.168.43.1:4000/post/" 
+   // fetch("http://192.168.43.1:4000/post/" 
     fetch("http://localhost:4000/post/"
-    + id)
+    +id)
     .then (response =>{
       response.json().then(postInfo =>{
         setTitle(postInfo.title);
@@ -23,6 +23,7 @@ export default function EditPost(){
     
   },[])
 async function updatePost(ev) {
+     ev.preventDefault();
     const data = new FormData();
     data.set("title", title);
     data.set("summary", summary);
@@ -31,8 +32,9 @@ async function updatePost(ev) {
     if (files?.[0]){
       data.set("file", files[0]);
     }
-    await //fetch("http://10.138.140.55:4000/post"
-    fetch("http://localhost:4000/post"
+    await fetch(
+    //"http://192.168.43.1:4000/post"
+   "http://localhost:4000/post"
     ,{
       method: "PUT",
       body: data,
@@ -45,7 +47,7 @@ async function updatePost(ev) {
   return <Navigate to={"/post"+ id} />
 }
   return (
-    <form onSubmit={updatePost}>
+  <form onSubmit={updatePost}>
       <input
         type="text"
         placeholder={"Title"}
@@ -59,11 +61,12 @@ async function updatePost(ev) {
         onChange={(ev) => setSummary(ev.target.value)}
       />
       <input type="file" onChange={(ev) => setFiles(ev.target.files)} />
-      <Editor
-      value={content}
-      onChange={setContent} />
-      
-      <button style={{ marginTop: "5px" }}>Create Post</button>
+  
+      <Editor 
+         onChange={setContent}
+         value={content} />
+         
+      <button style={{ marginTop: "5px" }}>Update Post</button>
     </form>
     )
 }

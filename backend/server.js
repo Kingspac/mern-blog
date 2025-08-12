@@ -15,8 +15,8 @@ const salt = bcrypt.genSaltSync(10);
 const secret = 'asdfgjrjifjejygtiyrfe';
 
 app.use(cors({credentials:true,origin:
-  'http://localhost:3000'
- // "http://192.168.43.1:3000"
+ 'http://localhost:3000',
+  //"http://192.168.43.1:3000"
 }));
 app.use(express.json());
 app.use(cookiePaarser());
@@ -93,7 +93,9 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
      author:info.id,
    });
     res.json(postDoc);
+    console.log(postDoc)
    });
+    console.log(postDoc)
 });
 
 app.get("/post", async (req,res)=>{
@@ -110,6 +112,45 @@ app.get("/post/:id", async (req,res)=>{
   .populate("author", ["username"]);
   res.json(postDoc)
 })
+// Ai code
+/*
+app.put("/post", uploadMiddleware.single("file"), async (req, res) => {
+  let newPath = null;
+  if (req.file) {
+    const { originalname, path } = req.file;
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    newPath = path + '.' + ext;
+    fs.renameSync(path, newPath);
+  }
+  const { token } = req.cookies;
+  try {
+    const info = jwt.verify(token, secret);
+     console.log("&&&&&&&&&&&&&&&" + req.body)
+    const { id, title, summary, content } = req.body;
+     console.log("&&&&&&&&&&&&&&&" + id)
+    const postDoc = await Post.findById(id);
+    if (!postDoc) {
+      return res.status(404).json("Post not found");
+    }
+    const isAuthor = postDoc.author.equals(info.id);
+    if (!isAuthor) {
+      return res.status(400).json("You are not the author");
+    }
+    postDoc.title = title;
+    postDoc.summary = summary;
+    postDoc.content = content;
+    if (newPath) postDoc.cover = newPath;
+    await postDoc.save();
+    res.json(postDoc);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json("Invalid token or other error");
+  }
+});
+
+
+/*/
 app.put("/post", uploadMiddleware.single("file"), async (req, res)=>{
 let newPath = null;
   if (req.file){
@@ -135,11 +176,10 @@ let newPath = null;
      summary,
      content,
      cover:newPath ? newPath : postDoc.cover
-   });
+   }); 
     res.json(postDoc);
    });
 });
-
 //req.json(post)
 
 app.listen(4000, ()=> {

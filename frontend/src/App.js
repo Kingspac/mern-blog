@@ -10,23 +10,23 @@ import {Route, Routes} from "react-router-dom";
 import CreatePost from "./pages/CreatePost";
 import PostPage from "./pages/PostPage";
 import EditPost from "./pages/EditPost";
-function App() {
+
+export default function App() {
   return (
     <div className="App">
       <UserContextProvider>
-         <Routes>
+        <Routes>
           <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-           <Route path="/create" element={<CreatePost />} />
-           <Route path="/Post/:id" element={<PostPage />} />
-        </Route>
-         {/* <"Route path="/edit/:id" element={<EditPost />} />*/}
-     </Routes>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/create" element={<CreatePost />} />
+            <Route path="/post/:id" element={<PostPage />} />
+            <Route path="/edit/:id" element={<EditPost />} />
+          </Route>
+        </Routes>
       </UserContextProvider>
     </div>
   );
 }
 
-export default App;

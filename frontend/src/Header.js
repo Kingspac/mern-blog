@@ -4,10 +4,11 @@ import {useContext,useEffect, useState} from 'react';
 
 export default function Header (){
   const {SetUserInfo,userInfo} = useContext(UserContext);
-  
+  // tutorial code   
+  /*
   useEffect(()=>{
-        //fetch("http://10.138.140.55:4000/profile"
-  fetch('http://localhost:4000/profile'
+        fetch("http://192.168.43.1:4000/profile"
+  //'http://localhost:4000/profile'
     ,{
       method: "POST",
       credentials:'include',
@@ -16,14 +17,39 @@ export default function Header (){
         SetUserInfo(userInfo)
       });
     });
-  },[]);
+  },[]);*/
+  
+  useEffect(() => {
+  fetch(
+//"http://192.168.43.1:4000/profile"
+'http://localhost:4000/profile'
+  ,{   
+    //method: "POST",
+    credentials: 'include',
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(userInfo => {
+    SetUserInfo(userInfo);
+  })
+  .catch(error => {
+    console.error('Error fetching profile:', error);
+  });
+}, []);
+
+  
   function logout(){
-    fetch('http://localhost:4000/logout'
-   //fetch("http://192.168.43.1:4000/logout"
+    fetch(
+      'http://localhost:4000/logout'
+   //"http://192.168.43.1:4000/logout"
    ,{
       credentials:'include',
       method:'POST',
-    });
+    })
     SetUserInfo(null);
   }
   const username = userInfo?.username;

@@ -8,8 +8,9 @@ export default function Login(){
   //const [ email, setEmail] = useState('');
   async function logIn(e){
     e.preventDefault();
-   const response = await fetch('http://localhost:4000/login'
-     //fetch("http://10.138.140.55:4000/login"
+   const response = await fetch(
+     'http://localhost:4000/login'
+     //"http://192.168.43.1:4000/login"
    ,{
       method:'POST',
       body: JSON.stringify({username,password}),

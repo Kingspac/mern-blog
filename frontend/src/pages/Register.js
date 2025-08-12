@@ -8,8 +8,9 @@ export default function Register(){
   async function register(e){
     e.preventDefault();
     
-  const response = await fetch('http://localhost:4000/register',
-  //fetch("http://10.138.140.55:4000/register",
+  const response = await fetch(
+    'http://localhost:4000/register',
+  //"http://192.168.43.1:4000/register",
   {
       method:'POST',
       body: JSON.stringify({username,password}),

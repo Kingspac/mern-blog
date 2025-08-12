@@ -6,8 +6,9 @@ export default function Post ({_id,title,summary,cover,content, createdAt,author
     <div className="post">
          <div className="image">
            <Link to={`/post/${_id}`}>
-               <img src={//"http://10.138.140.55:4000/"
-               "http://localhost:4000/"
+               <img src={
+               //"http://192.168.43.1:4000/"
+              "http://localhost:4000/"
                +cover} alt="eue" />
            </Link>
          </div>
